@@ -7,21 +7,19 @@ from app.routes.api import get_fixed_jd_text, FIXED_JOB_TITLE
 
 
 def test_fixed_jd_loaded_from_docx():
-    """Verify that the fixed JD text correctly reflects AI_Application_Developer_JD.docx."""
+    """Verify that the fixed JD text correctly reflects Tender_Executive_JD.docx."""
     jd_text = get_fixed_jd_text()
-    assert "AI Application Developer" in jd_text
-    assert "Fresh Graduates" in jd_text
-    assert "What You Will Do" in jd_text
+    assert "Tender Executive" in jd_text
+    assert "GeM" in jd_text
 
 
 def test_create_interview_saves_resume_and_fixes_job_details(client, sample_pdf_bytes):
-    """Verify resume binary is saved in base64 and role is fixed as 'AI developer'."""
+    """Verify resume binary is saved in base64 and role reflects Tender Executive."""
     resume_file = (io.BytesIO(sample_pdf_bytes), "candidate_resume.pdf")
 
     res = client.post("/api/interviews", data={
         "candidate_name": "Maya Chen",
         "candidate_email": "maya.chen@example.com",
-        "job_title": "AI developer",
         "resume_file": resume_file
     }, content_type="multipart/form-data")
 
@@ -35,8 +33,8 @@ def test_create_interview_saves_resume_and_fixes_job_details(client, sample_pdf_
     from app.extensions import db
     interview = db.session.get(Interview, interview_id)
     assert interview is not None
-    assert interview.job_title == "AI developer"
-    assert "AI Application Developer" in interview.jd_text
+    assert interview.job_title == "Tender Executive"
+    assert "Tender Executive" in interview.jd_text
     assert interview.resume_data_base64 is not None
     assert len(interview.resume_data_base64) > 10
     assert interview.llm_provider == "openai"
@@ -54,8 +52,8 @@ def test_landing_page_renders_single_page_form(client):
     res = client.get("/")
     assert res.status_code == 200
     html = res.get_data(as_text=True)
-    assert "Viraya Company's Interview AI Bot" in html
-    assert "AI developer" in html
+    assert "SK Weldedmesh Interview AI Bot" in html
+    assert "Tender Executive" in html
     assert 'name="candidate_name"' in html
     assert 'name="candidate_email"' in html
     assert 'name="resume_file"' in html

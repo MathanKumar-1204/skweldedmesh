@@ -19,7 +19,7 @@ def index():
     return render_template(
         "landing.html",
         captcha_question=captcha_question,
-        fixed_role="AI developer"
+        fixed_role="Tender Executive"
     )
 
 

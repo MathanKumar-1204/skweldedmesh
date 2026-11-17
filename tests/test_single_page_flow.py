@@ -10,8 +10,8 @@ def test_landing_page_accessible_without_login(unauth_client):
     res = unauth_client.get("/")
     assert res.status_code == 200
     html = res.get_data(as_text=True)
-    assert "Viraya Company's Interview AI Bot" in html
-    assert "AI developer" in html
+    assert "SK Weldedmesh Interview AI Bot" in html
+    assert "Tender Executive" in html
     assert 'name="candidate_name"' in html
     assert 'name="candidate_email"' in html
     assert 'name="resume_file"' in html
@@ -118,7 +118,7 @@ def test_live_interview_page_accessible_without_login(unauth_client, sample_pdf_
     live_res = unauth_client.get(f"/interviews/{int_id}/live")
     assert live_res.status_code == 200
     assert b"Direct Live Candidate" in live_res.data
-    assert b"Viraya" in live_res.data
+    assert b"SK Weldedmesh" in live_res.data
 
 
 def test_completed_page_shows_exact_required_message_and_no_scores(unauth_client, app):
@@ -127,8 +127,8 @@ def test_completed_page_shows_exact_required_message_and_no_scores(unauth_client
         interview = Interview(
             candidate_name="Finalized Candidate",
             candidate_email="finalized@example.com",
-            job_title="AI developer",
-            jd_text="AI developer JD",
+            job_title="Tender Executive",
+            jd_text="Tender Executive JD",
             resume_text="Resume text",
             status=InterviewStatus.COMPLETED
         )
@@ -142,7 +142,7 @@ def test_completed_page_shows_exact_required_message_and_no_scores(unauth_client
     html = res.get_data(as_text=True)
 
     # Exact required wording
-    assert "Your first interview round is complete. Viraya will reach out to shortlisted candidates for the second round" in html
+    assert "Your first interview round is complete. SK Weldedmesh will reach out to shortlisted candidates for the next round" in html
     assert "Finalized Candidate" in html
 
     # Scores and evaluations must NOT be visible

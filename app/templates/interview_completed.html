@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Interview Complete - Viraya Company's Interview AI Bot{% endblock %}
+{% block title %}Interview Complete - SK Weldedmesh Interview AI Bot{% endblock %}
 
 {% block content %}
 <div style="max-width: 680px; margin: 3rem auto; padding: 0 1rem;">
@@ -15,11 +15,11 @@
 
     <!-- Exact Required Heading -->
     <h1 style="font-size: 1.65rem; font-weight: 700; color: var(--text-main); line-height: 1.35; margin-bottom: 1rem;">
-      Your first interview round is complete. Viraya will reach out to shortlisted candidates for the second round
+      Your first interview round is complete. SK Weldedmesh will reach out to shortlisted candidates for the next round
     </h1>
 
     <p style="color: var(--text-secondary); font-size: 1rem; max-width: 540px; margin: 0 auto 2rem; line-height: 1.6;">
-      Thank you for completing your technical assessment for the <b>AI developer</b> position at <b>Viraya Company</b>. Your conversational responses and technical screening data have been safely recorded.
+      Thank you for completing your evaluation for the <b>Tender Executive</b> position at <b>SK Weldedmesh</b>. Your conversational responses and screening data have been safely recorded.
     </p>
 
     <!-- Submission Details Card -->
@@ -43,7 +43,7 @@
         <div>
           <span style="font-size: 0.825rem; color: var(--text-muted);">Applied Role:</span>
           <div style="font-weight: 600; color: var(--text-main); font-size: 0.95rem;">
-            AI developer
+            {{ interview.job_title or 'Tender Executive' }}
           </div>
         </div>
         <div>
@@ -58,7 +58,7 @@
           Recorded & Submitted
         </span>
         <span style="font-size: 0.8rem; color: var(--text-secondary);">
-          Evaluation data has been transferred securely to Viraya talent evaluation team.
+          Evaluation data has been transferred securely to SK Weldedmesh recruitment team.
         </span>
       </div>
     </div>

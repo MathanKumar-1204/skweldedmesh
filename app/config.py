@@ -48,6 +48,10 @@ class Config:
     BASE_DIR = BASE_DIR
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key-change-in-production")
     
+    # Company & Role Branding
+    COMPANY_NAME = os.getenv("COMPANY_NAME", "SK Weldedmesh").strip()
+    DEFAULT_JOB_TITLE = os.getenv("DEFAULT_JOB_TITLE", "Tender Executive").strip()
+
     # Database
     DATABASE_URL = RESOLVED_DB_URL
     SQLALCHEMY_DATABASE_URI = RESOLVED_DB_URL
@@ -56,6 +60,8 @@ class Config:
     # MongoDB Database
     MONGO_URI = os.getenv("MONGO_URI", "").strip()
     MONGO_DB_NAME = os.getenv("MONGO_DB_NAME", "").strip() or None
+    MONGO_INTERVIEWS_COLLECTION = os.getenv("MONGO_INTERVIEWS_COLLECTION", "skwm_interviews").strip()
+    MONGO_USERS_COLLECTION = os.getenv("MONGO_USERS_COLLECTION", "skwm_users").strip()
     
     # Upload settings
     MAX_CONTENT_LENGTH = int(os.getenv("MAX_CONTENT_LENGTH", 10 * 1024 * 1024))  # 10 MB

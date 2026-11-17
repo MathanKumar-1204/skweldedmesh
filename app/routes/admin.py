@@ -1,5 +1,5 @@
 """
-Admin Blueprint for Viraya Company's Interview AI Bot.
+Admin Blueprint for SK Weldedmesh Interview AI Bot.
 Provides an administrative portal strictly accessible by admin@gmail.com with admin@2004.
 Displays all candidate interviews across the platform sorted from newest to oldest.
 """

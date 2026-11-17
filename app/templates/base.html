@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Viraya Company's Interview AI Bot{% endblock %}</title>
+  <title>{% block title %}SK Weldedmesh Interview AI Bot{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,8 +16,8 @@
   <nav class="navbar">
     <div class="nav-container">
       <a href="{{ url_for('dashboard.index') }}" class="brand-logo">
-        <span class="brand-badge-square">V</span>
-        <span class="brand-title">Viraya <span style="font-weight: 400; color: var(--text-secondary); font-size: 0.95rem;">Interview AI Bot</span></span>
+        <span class="brand-badge-square">SK</span>
+        <span class="brand-title">SK Weldedmesh <span style="font-weight: 400; color: var(--text-secondary); font-size: 0.95rem;">Interview AI Bot</span></span>
       </a>
       <div class="nav-links" style="display: flex; align-items: center; gap: 0.85rem;">
         {% if session.get('is_admin') %}
@@ -98,7 +98,7 @@
   <!-- Footer -->
   <footer class="footer">
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.4rem; align-items: center;">
-      <p><b>Viraya Company's Interview AI Bot</b> • Automated Technical Candidate Assessment</p>
+      <p><b>SK Weldedmesh Interview AI Bot</b> • Automated Candidate Assessment</p>
     </div>
   </footer>
 

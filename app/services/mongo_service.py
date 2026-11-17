@@ -52,6 +52,24 @@ def get_mongo_db():
         return client["signup"]
 
 
+def get_interviews_collection():
+    """Get MongoDB collection for interviews (defaults to skwm_interviews)."""
+    db = get_mongo_db()
+    if db is None:
+        return None
+    col_name = getattr(Config, "MONGO_INTERVIEWS_COLLECTION", None) or os.getenv("MONGO_INTERVIEWS_COLLECTION", "skwm_interviews")
+    return db[col_name]
+
+
+def get_users_collection():
+    """Get MongoDB collection for users (defaults to skwm_users)."""
+    db = get_mongo_db()
+    if db is None:
+        return None
+    col_name = getattr(Config, "MONGO_USERS_COLLECTION", None) or os.getenv("MONGO_USERS_COLLECTION", "skwm_users")
+    return db[col_name]
+
+
 # ============================================================================
 # USER AUTHENTICATION & MANAGEMENT
 # ============================================================================
@@ -84,31 +102,31 @@ class MongoUser:
 
     @classmethod
     def find_by_email(cls, email: str) -> Optional["MongoUser"]:
-        db = get_mongo_db()
-        if db is None or not email:
+        col = get_users_collection()
+        if col is None or not email:
             return None
-        doc = db.users.find_one({"email": email.lower().strip()})
+        doc = col.find_one({"email": email.lower().strip()})
         return cls(doc) if doc else None
 
     @classmethod
     def find_by_id(cls, user_id: str) -> Optional["MongoUser"]:
-        db = get_mongo_db()
-        if db is None or not user_id:
+        col = get_users_collection()
+        if col is None or not user_id:
             return None
         query = {"_id": user_id}
         if ObjectId and ObjectId.is_valid(user_id):
             query = {"$or": [{"_id": ObjectId(user_id)}, {"_id": user_id}]}
-        doc = db.users.find_one(query)
+        doc = col.find_one(query)
         return cls(doc) if doc else None
 
     @classmethod
     def create(cls, name: str, email: str, password: str) -> "MongoUser":
-        db = get_mongo_db()
-        if db is None:
+        col = get_users_collection()
+        if col is None:
             raise RuntimeError("MongoDB connection not available.")
 
         email_clean = email.lower().strip()
-        if db.users.find_one({"email": email_clean}):
+        if col.find_one({"email": email_clean}):
             raise ValueError(f"An account with email '{email_clean}' already exists.")
 
         hashed = generate_password_hash(password)
@@ -120,7 +138,7 @@ class MongoUser:
             "created_at": now,
             "updated_at": now
         }
-        res = db.users.insert_one(user_doc)
+        res = col.insert_one(user_doc)
         user_doc["_id"] = res.inserted_id
         return cls(user_doc)
 
@@ -286,33 +304,33 @@ class MongoInterview:
 
     def save(self):
         """Upsert interview document in MongoDB collection."""
-        db = get_mongo_db()
-        if db is None:
+        col = get_interviews_collection()
+        if col is None:
             return
         if self.report and self.status in ("awaiting_finalization", "draft", "in_progress"):
             self.status = "completed"
         self.updated_at = datetime.now(timezone.utc)
         doc = self.to_mongo_doc()
-        db.interviews.update_one({"_id": self.id}, {"$set": doc}, upsert=True)
+        col.update_one({"_id": self.id}, {"$set": doc}, upsert=True)
 
     @classmethod
     def find_by_id(cls, interview_id: str) -> Optional["MongoInterview"]:
         """Find interview by ID."""
-        db = get_mongo_db()
-        if db is None or not interview_id:
+        col = get_interviews_collection()
+        if col is None or not interview_id:
             return None
-        doc = db.interviews.find_one({"$or": [{"_id": interview_id}, {"id": interview_id}]})
+        doc = col.find_one({"$or": [{"_id": interview_id}, {"id": interview_id}]})
         return cls(doc) if doc else None
 
     @classmethod
     def find_by_email(cls, email: str) -> Optional["MongoInterview"]:
         """Find an existing interview by candidate email (case-insensitive)."""
-        db = get_mongo_db()
-        if db is None or not email:
+        col = get_interviews_collection()
+        if col is None or not email:
             return None
         import re
         clean_email = email.lower().strip()
-        doc = db.interviews.find_one({
+        doc = col.find_one({
             "candidate_email": {"$regex": f"^{re.escape(clean_email)}$", "$options": "i"}
         })
         return cls(doc) if doc else None
@@ -320,20 +338,20 @@ class MongoInterview:
     @classmethod
     def find_by_user(cls, user_id: Optional[str] = None) -> List["MongoInterview"]:
         """Find all interviews for a user (or all if user_id is None), ordered by created_at desc."""
-        db = get_mongo_db()
-        if db is None:
+        col = get_interviews_collection()
+        if col is None:
             return []
         query = {}
         if user_id:
             query = {"user_id": str(user_id)}
-        cursor = db.interviews.find(query).sort("created_at", pymongo.DESCENDING)
+        cursor = col.find(query).sort("created_at", pymongo.DESCENDING)
         return [cls(doc) for doc in cursor]
 
     @classmethod
     def delete(cls, interview_id: str) -> bool:
         """Delete interview document."""
-        db = get_mongo_db()
-        if db is None:
+        col = get_interviews_collection()
+        if col is None:
             return False
-        res = db.interviews.delete_one({"$or": [{"_id": interview_id}, {"id": interview_id}]})
+        res = col.delete_one({"$or": [{"_id": interview_id}, {"id": interview_id}]})
         return res.deleted_count > 0

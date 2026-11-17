@@ -104,7 +104,7 @@ class PDFReportService:
         story = []
 
         # Header Title
-        story.append(Paragraph("AI Interview Studio", title_style))
+        story.append(Paragraph("SK Weldedmesh - Interview AI Studio", title_style))
         story.append(Paragraph("Candidate Performance & Developmental Evaluation Report", subtitle_style))
         story.append(HRFlowable(width="100%", thickness=1.5, color=primary_color, spaceAfter=12))
 

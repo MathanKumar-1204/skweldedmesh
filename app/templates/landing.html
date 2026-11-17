@@ -1,28 +1,28 @@
 {% extends "base.html" %}
 
-{% block title %}Viraya Company's Interview AI Bot - Technical Screening{% endblock %}
+{% block title %}SK Weldedmesh - Tender Executive Interview{% endblock %}
 
 {% block content %}
 <div style="max-width: 640px; margin: 2rem auto; padding: 0 1rem;">
   
   <!-- Header / Brand Card -->
   <div style="text-align: center; margin-bottom: 2rem;">
-    <div style="width: 58px; height: 58px; background: var(--primary); color: white; border-radius: var(--radius-md); font-weight: 800; font-size: 1.85rem; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: var(--shadow-md);">
-      V
+    <div style="width: 58px; height: 58px; background: var(--primary); color: white; border-radius: var(--radius-md); font-weight: 800; font-size: 1.35rem; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem; box-shadow: var(--shadow-md); letter-spacing: 0.5px;">
+      SK
     </div>
     <h1 style="font-size: 1.85rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem; letter-spacing: -0.02em;">
-      Viraya Company's Interview AI Bot
+      SK Weldedmesh Interview AI Bot
     </h1>
     <p style="color: var(--text-secondary); font-size: 0.975rem; max-width: 520px; margin: 0 auto; line-height: 1.55;">
-      Welcome to your first-round technical screening. Enter your details, upload your CV, and verify the captcha to start your spoken technical interview.
+      Welcome to your spoken evaluation for the Tender Executive role. Enter your details, upload your CV, and verify the captcha to start your interview.
     </p>
 
     <!-- Role Information Pill -->
     <div style="margin-top: 1.25rem; display: inline-flex; align-items: center; gap: 0.5rem; background: var(--bg-muted); border: 1px solid var(--border-color); padding: 0.35rem 0.85rem; border-radius: var(--radius-full); font-size: 0.85rem;">
       <span style="color: var(--text-muted); font-weight: 500;">Position:</span>
-      <span style="font-weight: 700; color: var(--primary);">AI developer</span>
+      <span style="font-weight: 700; color: var(--primary);">Tender Executive – Government Tenders & GeM</span>
       <span style="color: var(--border-color);">|</span>
-      <span style="color: var(--text-secondary);">15 Min Spoken Technical Assessment</span>
+      <span style="color: var(--text-secondary);">Spoken Voice Assessment</span>
     </div>
   </div>
 
@@ -361,14 +361,14 @@
       startInterviewBtn.disabled = true;
       btnSpinner.style.display = "inline-block";
       btnText.innerText = "AI Interviewer is joining the room , Please Wait";
-      btnHelperNote.innerText = "Connecting to Viraya AI voice interviewer and analyzing your CV...";
+      btnHelperNote.innerText = "Connecting to SK Weldedmesh AI voice interviewer and analyzing your CV...";
 
       const formData = new FormData();
       formData.append("candidate_name", name);
       formData.append("candidate_email", email);
       formData.append("resume_file", file);
       formData.append("captcha", captcha);
-      formData.append("job_title", "AI developer");
+      formData.append("job_title", "Tender Executive");
 
       try {
         // Step 2: Create interview session

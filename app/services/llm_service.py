@@ -451,94 +451,106 @@ class LLMService:
         schema_name = response_model.__name__
 
         if schema_name == "InterviewPlanSchema":
+            title = "Tender Executive – Government Tenders & GeM"
+            if "Target Job Title:" in user_prompt:
+                try:
+                    for line in user_prompt.splitlines():
+                        if "Target Job Title:" in line:
+                            extracted = line.split("Target Job Title:", 1)[1].strip()
+                            if extracted:
+                                title = extracted
+                            break
+                except Exception:
+                    pass
+
             return response_model.model_validate({
-                "job_title": "Content Creator & Strategist",
+                "job_title": title,
                 "responsibilities": [
-                    "Develop engaging multi-platform editorial content strategies",
-                    "Produce high-quality written articles, scripts, and social assets",
-                    "Conduct audience research and keyword analysis",
-                    "Collaborate with marketing and design teams to ensure brand voice consistency",
-                    "Track content KPIs and iterate based on engagement analytics"
+                    "Identify relevant government tenders on GeM, CPPP, and state procurement portals",
+                    "Evaluate technical, financial, and documentary eligibility before bidding",
+                    "Coordinate with presales for BOQs and finance for EMD / Bank Guarantees",
+                    "Prepare declarations, commercial submissions, and submit timely bids on GeM",
+                    "Track outcomes, support reverse auctions, and conduct structured loss reviews"
                 ],
                 "required_competencies": [
                     {
-                        "id": "content_strategy",
-                        "name": "Content Strategy & Editorial Planning",
+                        "id": "gem_portal_mastery",
+                        "name": "GeM & Government E-Procurement Fluency",
                         "weight": 25,
                         "difficulty": "Intermediate",
-                        "objective": "Assess ability to plan, calendar, and execute multi-channel content roadmaps.",
-                        "expected_evidence": "Candidate describes structured editorial workflows, persona segmentation, and scheduling tools."
+                        "objective": "Assess hands-on fluency in GeM bidding, BOQs, and e-procurement portals.",
+                        "expected_evidence": "Candidate describes structured portal workflows, handling shortfall queries, and corrigenda."
                     },
                     {
-                        "id": "audience_seo",
-                        "name": "Audience Research & SEO Optimization",
-                        "weight": 20,
-                        "difficulty": "Intermediate",
-                        "objective": "Evaluate understanding of search intent, keyword targeting, and reader psychology.",
-                        "expected_evidence": "References keyword research methods, search intent mapping, and analytics tools like Google Analytics or Semrush."
-                    },
-                    {
-                        "id": "writing_quality",
-                        "name": "Writing Quality & Brand Voice Adaptation",
+                        "id": "eligibility_compliance",
+                        "name": "Eligibility Assessment & Compliance Rigor",
                         "weight": 25,
                         "difficulty": "Advanced",
-                        "objective": "Gauge narrative craft, headline hooks, tone modulation, and proofreading rigor.",
-                        "expected_evidence": "Explains how they tailor tone across technical vs consumer pieces and handle revision feedback."
+                        "objective": "Assess ability to review tender clauses and eliminate documentation errors.",
+                        "expected_evidence": "Produces compliance checklists and identifies restrictive clauses for pre-bid queries."
                     },
                     {
-                        "id": "performance_analytics",
-                        "name": "Content Performance & Iteration",
-                        "weight": 15,
+                        "id": "costing_coordination",
+                        "name": "Costing, BOQ & Cross-Functional Coordination",
+                        "weight": 20,
                         "difficulty": "Intermediate",
-                        "objective": "Assess data-driven optimization and metric tracking.",
-                        "expected_evidence": "Mentions concrete KPIs (retention, click-through, conversions) and A/B test methodologies."
+                        "objective": "Assess coordination with presales and finance for pricing, taxes, freight, and EMD/BG.",
+                        "expected_evidence": "Structured coordination to obtain price approval and financial securities before deadlines."
                     },
                     {
-                        "id": "creative_problem_solving",
-                        "name": "Creative Problem Solving & Execution Under Deadlines",
-                        "weight": 15,
+                        "id": "results_loss_analysis",
+                        "name": "Reverse Auctions & Loss Analysis",
+                        "weight": 20,
                         "difficulty": "Intermediate",
-                        "objective": "Evaluate prioritization, managing creative block, and stakeholder feedback cycles.",
-                        "expected_evidence": "Shares a real story of turning around a high-stakes campaign under tight deadlines."
+                        "objective": "Assess reverse auction price discipline and post-tender loss reviews.",
+                        "expected_evidence": "Participates in reverse auctions within limits and conducts structured loss reviews."
+                    },
+                    {
+                        "id": "role_calibration",
+                        "name": "Process Discipline & Fit for SK Weldedmesh",
+                        "weight": 10,
+                        "difficulty": "Intermediate",
+                        "objective": "Assess process ownership and alignment with SK Weldedmesh tendering goals.",
+                        "expected_evidence": "Maintains meticulous opportunity trackers and high submission discipline."
                     }
                 ],
                 "resume_skills_found": [
-                    "Long-form blogging",
-                    "Social media copywriting",
-                    "SEO keyword research",
-                    "WordPress and CMS management",
-                    "Audience analytics"
+                    "GeM portal bidding",
+                    "CPPP e-procurement",
+                    "BOQ preparation",
+                    "Tender documentation checklist",
+                    "EMD & Bank Guarantee tracking"
                 ],
                 "skill_gaps": [
-                    "Multi-channel video scriptwriting",
-                    "Direct response email funnel copywriting"
+                    "Reverse auction execution under tight price floors",
+                    "Manufacturing tender specification drafting"
                 ],
                 "sections": [
                     {
                         "section_id": "intro",
-                        "title": "Introduction & Agenda",
+                        "title": "Introduction & Background",
                         "target_duration_minutes": 2,
                         "questions": [
                             {
                                 "id": "q_intro_1",
-                                "question_text": "Welcome! I'm Shreya, your AI interviewer today. To get us started, could you briefly introduce yourself and what drew you to this Content Creator role?",
-                                "competency_id": "writing_quality",
-                                "expected_evidence": "Clear communication, career trajectory, enthusiasm for the position.",
-                                "follow_up_guidance": "If brief, ask what specific aspect of content creation energizes them most."
+                                "question_text": "Welcome! I'm Shreya, your AI interviewer today. To get us started, could you briefly introduce yourself and share your experience with government tenders and GeM?",
+                                "competency_id": "gem_portal_mastery",
+                                "expected_evidence": "Clear communication, hands-on portal experience, enthusiasm for the position.",
+                                "follow_up_guidance": "If brief, ask what specific categories of government tenders they have handled."
                             }
                         ]
                     },
                     {
                         "section_id": "resume_deep_dive",
-                        "title": "Resume & Project Highlights",
+                        "title": "Resume & Tender Highlights",
                         "target_duration_minutes": 4,
                         "questions": [
                             {
                                 "id": "q_resume_1",
-                                "question_text": "Looking at your background, you led several content initiatives. Could you walk me through a specific piece of content or campaign you're particularly proud of?",
-                                "competency_id": "content_strategy",
-                                "expected_evidence": "Specific project details, goal setting, creative process, and measurable outcomes.",
-                                "follow_up_guidance": "Ask what challenges arose during production and how they overcame them."
+                                "question_text": "Looking at your background, you managed multiple government tender submissions. Could you walk me through a complex bid you personally prepared and submitted?",
+                                "competency_id": "eligibility_compliance",
+                                "expected_evidence": "Specific portal workflows, eligibility checks, compliance sheets, and submission timeline.",
+                                "follow_up_guidance": "Ask how they coordinated missing documents under tight deadlines."
                             }
                         ]
                     },
@@ -549,17 +561,17 @@ class LLMService:
                         "questions": [
                             {
                                 "id": "q_comp_1",
-                                "question_text": "How do you approach discovering audience search intent and tailoring your content so it ranks well without sacrificing engaging storytelling?",
-                                "competency_id": "audience_seo",
-                                "expected_evidence": "Balancing user value with on-page SEO best practices.",
-                                "follow_up_guidance": "Inquire which tools they rely on for competitive research."
+                                "question_text": "What would you do if you discovered that a high-value tender had restrictive eligibility conditions favoring a competitor?",
+                                "competency_id": "eligibility_compliance",
+                                "expected_evidence": "Drafting pre-bid queries, citing procurement guidelines, seeking management approval.",
+                                "follow_up_guidance": "Inquire how they follow up if no corrigendum is issued."
                             },
                             {
                                 "id": "q_comp_2",
-                                "question_text": "When writing for different brand personas or shifting from technical documentation to conversational social copy, how do you adjust your voice?",
-                                "competency_id": "writing_quality",
-                                "expected_evidence": "Methodical approach to brand guidelines, tone frameworks, and vocabulary.",
-                                "follow_up_guidance": "Ask how they handle conflicting feedback from internal reviewers."
+                                "question_text": "How do you coordinate with presales for BOQ specifications and finance for EMD and Bank Guarantees to prevent last-minute submission delays?",
+                                "competency_id": "costing_coordination",
+                                "expected_evidence": "Methodical timeline tracking, escalation paths, and verifying costing sign-offs.",
+                                "follow_up_guidance": "Ask how they handle sudden portal technical glitches near submission cut-off."
                             }
                         ]
                     },
@@ -570,10 +582,10 @@ class LLMService:
                         "questions": [
                             {
                                 "id": "q_scen_1",
-                                "question_text": "Imagine a flagship article you published sees high initial click-throughs but a 90% bounce rate within 15 seconds. How would you diagnose the problem and iterate?",
-                                "competency_id": "performance_analytics",
-                                "expected_evidence": "Diagnostic mindset: intro hook, layout readability, mismatch with search intent, fast remediation plan.",
-                                "follow_up_guidance": "Ask what specific analytics metrics they would inspect first."
+                                "question_text": "When SK Weldedmesh loses a tender or faces technical disqualification, how do you conduct a structured loss review?",
+                                "competency_id": "results_loss_analysis",
+                                "expected_evidence": "Distinguishing documented facts from assumptions, competitor price analysis, and corrective action logging.",
+                                "follow_up_guidance": "Ask how they ensure corrective actions are applied to future bids."
                             }
                         ]
                     },
@@ -584,10 +596,10 @@ class LLMService:
                         "questions": [
                             {
                                 "id": "q_close_1",
-                                "question_text": "Thank you for sharing your insights today! Before we conclude, what questions do you have about the team, the role, or our content vision?",
-                                "competency_id": "creative_problem_solving",
-                                "expected_evidence": "Thoughtful, engaged candidate questions.",
-                                "follow_up_guidance": "Answer gracefully and wrap up the session warmly."
+                                "question_text": "Thank you for sharing your experience today. Before we conclude, what questions do you have about the Tender Executive role at SK Weldedmesh?",
+                                "competency_id": "role_calibration",
+                                "expected_evidence": "Thoughtful, engaged candidate questions about SK Weldedmesh's tender volume and product lines.",
+                                "follow_up_guidance": "Answer gracefully and wrap up the session professionally."
                             }
                         ]
                     }

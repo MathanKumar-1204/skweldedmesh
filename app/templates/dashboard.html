@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard - Viraya Company's Interview AI Bot{% endblock %}
+{% block title %}Dashboard - SK Weldedmesh Interview AI Bot{% endblock %}
 
 {% block content %}
 <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
@@ -9,11 +9,11 @@
       {% if session.get('user_name') %}
         Welcome back, {{ session.get('user_name') }}
       {% else %}
-        Viraya Company's Interview AI Bot
+        SK Weldedmesh Interview AI Bot
       {% endif %}
     </h1>
     <p style="color: var(--text-secondary); max-width: 650px; font-size: 0.95rem;">
-      AI-powered spoken voice technical interviews for the AI Application Developer role. Candidate resumes, live transcriptions, and calibrated evaluation reports are saved securely to your account.
+      AI-powered spoken voice interviews for the Tender Executive role. Candidate resumes, live transcriptions, and calibrated evaluation reports are saved securely to your account.
     </p>
   </div>
   <a href="{{ url_for('interviews.new_interview') }}" class="btn btn-primary btn-lg" style="font-weight: 600;">
@@ -85,7 +85,7 @@
               </td>
               <td>
                 <span style="font-weight: 500;">{{ interview.job_title }}</span>
-                <div style="font-size: 0.775rem; color: var(--text-muted);">Viraya Role</div>
+                <div style="font-size: 0.775rem; color: var(--text-muted);">SKWM Role</div>
               </td>
               <td>{{ interview.duration_minutes }} min</td>
               <td>{{ interview.created_at|format_dt }}</td>
@@ -142,7 +142,7 @@
     <div style="text-align: center; padding: 3.5rem 1rem;">
       <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main);">No interviews created yet</h3>
       <p style="color: var(--text-secondary); max-width: 480px; margin: 0 auto 1.5rem; font-size: 0.95rem;">
-        Get started by creating a new interview with a candidate's resume for Viraya Company's AI Application Developer role.
+        Get started by creating a new interview with a candidate's resume for SK Weldedmesh's Tender Executive role.
       </p>
       <a href="{{ url_for('interviews.new_interview') }}" class="btn btn-primary">
         + Start First Interview

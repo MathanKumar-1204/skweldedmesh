@@ -58,8 +58,8 @@ def test_unauthenticated_candidate_landing_page(unauth_client):
     # Candidate visiting / gets the single interview setup landing page without login
     res = unauth_client.get("/")
     assert res.status_code == 200
-    assert b"Viraya Company" in res.data
-    assert b"AI developer" in res.data
+    assert b"SK Weldedmesh" in res.data
+    assert b"Tender Executive" in res.data
 
     # Unauthenticated user visiting /admin is redirected to login
     res = unauth_client.get("/admin/", follow_redirects=False)
@@ -134,7 +134,7 @@ def test_dashboard_user_isolation(client, sample_pdf_bytes):
     # Public landing page renders cleanly without login
     dash = client.get("/")
     assert dash.status_code == 200
-    assert b"Viraya Company" in dash.data
+    assert b"SK Weldedmesh" in dash.data
 
 
 def test_user_preferences_endpoint(client):

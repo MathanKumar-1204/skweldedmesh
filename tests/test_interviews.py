@@ -211,7 +211,7 @@ def test_templates_render_model_and_engine_selectors(client, prepared_interview)
     dash_html = dash_res.get_data(as_text=True)
     assert 'id="dashboard_llm_provider"' not in dash_html
     assert 'id="dashboard_voice_engine"' not in dash_html
-    assert "Viraya Company" in dash_html or "Start Interview" in dash_html
+    assert "SK Weldedmesh" in dash_html or "Start Interview" in dash_html
 
     # Setup page has fixed role and hidden studio engines
     setup_res = client.get("/interviews/new")
@@ -219,7 +219,7 @@ def test_templates_render_model_and_engine_selectors(client, prepared_interview)
     setup_html = setup_res.get_data(as_text=True)
     assert 'name="llm_provider"' in setup_html
     assert 'name="voice_engine"' in setup_html
-    assert 'AI developer' in setup_html
+    assert 'Tender Executive' in setup_html
 
     # Preparation page displays the active configuration
     prep_res = client.get(f"/interviews/{prepared_interview.id}")
