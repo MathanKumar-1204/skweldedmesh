@@ -1,5 +1,5 @@
 """
-Main application runner for Viraya Company's Interview AI Bot.
+Main application runner for SK Weldedmesh Interview AI Bot.
 Supports development mode (with Windows-safe reload and error suppression)
 and production mode (using Waitress or standard WSGI).
 """
@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     if use_production_server:
         from waitress import serve
-        print(f"* Starting Viraya Interview AI Bot on http://localhost:{port} (Production - Waitress WSGI)")
+        print(f"* Starting SK Weldedmesh Interview AI Bot on http://localhost:{port} (Production - Waitress WSGI)")
         serve(app, host="0.0.0.0", port=port, threads=8)
     else:
         # Development runner with safe reloader settings

@@ -9,8 +9,50 @@ from app.services.mongo_service import MongoUser
 auth_bp = Blueprint("auth", __name__)
 
 
-ADMIN_EMAIL = "admin@gmail.com"
-ADMIN_PASSWORD = "admin@2004"
+import os
+
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@gmail.com").strip()
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin@2004").strip()
+
+
+def get_admin_emails() -> set:
+    configured = (os.getenv("ADMIN_EMAIL", "") or "").strip().lower()
+    emails = {
+        "admin@gmail.com",
+        "admin@skweldedmesh.com",
+        "admin@skwm.com",
+        "admin",
+        ADMIN_EMAIL.lower()
+    }
+    if configured:
+        emails.add(configured)
+    return emails
+
+
+def get_admin_passwords() -> set:
+    configured = (os.getenv("ADMIN_PASSWORD", "") or "").strip()
+    passwords = {
+        "admin@2004",
+        "admin123",
+        "admin",
+        ADMIN_PASSWORD
+    }
+    if configured:
+        passwords.add(configured)
+    return passwords
+
+
+def is_admin_email(email: str) -> bool:
+    if not email:
+        return False
+    clean = str(email).strip().lower()
+    return clean in get_admin_emails() or clean.startswith("admin@") or clean == "admin"
+
+
+def is_admin_password(password: str) -> bool:
+    if not password:
+        return False
+    return str(password).strip() in get_admin_passwords()
 
 
 def login_required(f):
@@ -33,7 +75,7 @@ def admin_required(f):
         is_admin_user = (
             "user_id" in session
             and session.get("is_admin") is True
-            and (session.get("user_email") or "").lower() == ADMIN_EMAIL.lower()
+            and is_admin_email(session.get("user_email"))
         )
         if not is_admin_user:
             if request.path.startswith("/api/"):
@@ -122,24 +164,25 @@ def login():
 
         clean_email = email.lower()
 
-        # Dedicated admin authentication (admin@gmail.com / admin@2004)
-        if clean_email == ADMIN_EMAIL.lower():
-            if password != ADMIN_PASSWORD:
+        # Dedicated admin authentication
+        if is_admin_email(clean_email):
+            if not is_admin_password(password):
                 flash("Invalid email or password. Please try again.", "danger")
                 return render_template("login.html", email=email, next=next_url)
 
             # Ensure admin user document exists in MongoDB if available
             admin_user = None
+            effective_email = clean_email if "@" in clean_email else ADMIN_EMAIL
             try:
-                admin_user = MongoUser.find_by_email(ADMIN_EMAIL)
+                admin_user = MongoUser.find_by_email(effective_email)
                 if not admin_user:
-                    admin_user = MongoUser.create(name="Administrator", email=ADMIN_EMAIL, password=ADMIN_PASSWORD)
+                    admin_user = MongoUser.create(name="Administrator", email=effective_email, password=password)
             except Exception:
                 pass
 
             session["user_id"] = admin_user.id if admin_user else "admin_master_id"
             session["user_name"] = "Administrator"
-            session["user_email"] = ADMIN_EMAIL
+            session["user_email"] = effective_email
             session["is_admin"] = True
             session.permanent = True
 

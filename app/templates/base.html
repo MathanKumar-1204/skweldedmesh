@@ -35,6 +35,10 @@
               Log Out
             </a>
           </div>
+        {% else %}
+          <a href="{{ url_for('auth.login') }}" class="nav-link" style="font-weight: 600; font-size: 0.875rem;">
+            Admin Log In
+          </a>
         {% endif %}
       </div>
     </div>
